@@ -35,12 +35,20 @@ namespace ByteSizeNotes
 
         private void RefreshNotes()
         {
+            int selectedIndex = lstNotes.SelectedIndex;
+
             lstNotes.Items.Clear();
             foreach (var note in NoteManager.Instance.Notes)
             {
                 lstNotes.Items.Add(note.Title);
             }
+
+            if (selectedIndex >= 0 && selectedIndex < lstNotes.Items.Count)
+            {
+                lstNotes.SelectedIndex = selectedIndex;
+            }
         }
+
 
         private void lstNotes_SelectedIndexChanged(object sender, EventArgs e)
         {
