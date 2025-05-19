@@ -91,5 +91,15 @@ namespace ByteSizeNotes
         {
 
         }
+
+        private void txtContent_TextChanged_1(object sender, EventArgs e)
+        {
+
+        }
+
+        private void txtTitle_TextChanged(object sender, EventArgs e)
+        {
+
+        }
     }
 }
