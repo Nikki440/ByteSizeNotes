@@ -3,27 +3,41 @@ using System.Collections.Generic;
 
 namespace ByteSizeNotes.Services
 {
+
+    /// Singleton 
+
     public class NoteManager
     {
         private static NoteManager _instance;
         public static NoteManager Instance => _instance ?? (_instance = new NoteManager());
 
-        private List<Note> _notes = new List<Note>();
-        public List<Note> Notes => _notes;
+        private NoteStorageStrategy _storageStrategy;
 
-        private NoteManager() { }
+        private NoteManager()
+        {
+            _storageStrategy = new SQLSizeNotes();
+        }
+
+        public List<Note> Notes => _storageStrategy.LoadAll();
 
         public void Add(Note note)
         {
-            _notes.Add(note);
+            _storageStrategy.Save(note);
         }
 
         public void RemoveAt(int index)
         {
-            if (index >= 0 && index < _notes.Count)
+            var allNotes = _storageStrategy.LoadAll();
+            if (index >= 0 && index < allNotes.Count)
             {
-                _notes.RemoveAt(index);
+                var noteToRemove = allNotes[index];
+                _storageStrategy.Delete(noteToRemove);
             }
+        }
+
+        public void Update(Note note)
+        {
+            _storageStrategy.Update(note); 
         }
     }
 }

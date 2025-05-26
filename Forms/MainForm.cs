@@ -28,7 +28,7 @@ namespace ByteSizeNotes
                 Content = txtContent.Text
             };
 
-            NoteManager.Instance.Add(note);
+            NoteManager.Instance.Add(note); //singleton
             RefreshNotes();
             ClearInputs();
         }
@@ -82,9 +82,12 @@ namespace ByteSizeNotes
                 var selectedNote = NoteManager.Instance.Notes[lstNotes.SelectedIndex];
                 selectedNote.Title = txtTitle.Text;
                 selectedNote.Content = txtContent.Text;
+
+                NoteManager.Instance.Update(selectedNote);
                 RefreshNotes();
             }
         }
+
 
 
         private void txtContent_TextChanged(object sender, EventArgs e)
@@ -100,6 +103,6 @@ namespace ByteSizeNotes
         private void txtTitle_TextChanged(object sender, EventArgs e)
         {
 
-        }
+        } 
     }
 }
