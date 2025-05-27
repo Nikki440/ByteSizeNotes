@@ -1,4 +1,5 @@
 ﻿using ByteSizeNotes.Models;
+using ByteSizeNotes.Observer;
 using ByteSizeNotes.Services;
 using System;
 using System.Collections.Generic;
@@ -12,11 +13,12 @@ using System.Windows.Forms;
 
 namespace ByteSizeNotes
 {
-    public partial class MainForm : Form
+    public partial class MainForm : Form, INoteObserver
     {
         public MainForm()
         {
             InitializeComponent();
+            NoteManager.Instance.RegisterObserver(this);
             RefreshNotes();
         }
 
@@ -29,8 +31,6 @@ namespace ByteSizeNotes
             };
 
             NoteManager.Instance.Add(note); //singleton
-            RefreshNotes();
-            ClearInputs();
         }
 
         private void RefreshNotes()
@@ -88,7 +88,18 @@ namespace ByteSizeNotes
             }
         }
 
+        public void OnNotesChanged()
+        {
+            RefreshNotes();
+            ClearInputs();
+            MessageBox.Show("Observer is aangeroepen!");
+        }
 
+        protected override void OnFormClosed(FormClosedEventArgs e)
+        {
+            NoteManager.Instance.UnregisterObserver(this);
+            base.OnFormClosed(e);
+        }
 
         private void txtContent_TextChanged(object sender, EventArgs e)
         {

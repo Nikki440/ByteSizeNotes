@@ -1,4 +1,5 @@
 ﻿using ByteSizeNotes.Models;
+using ByteSizeNotes.Observer;
 using System.Collections.Generic;
 
 namespace ByteSizeNotes.Services
@@ -23,6 +24,7 @@ namespace ByteSizeNotes.Services
         public void Add(Note note)
         {
             _storageStrategy.Save(note);
+            NotifyObservers(); // Voeg deze regel toe
         }
 
         public void RemoveAt(int index)
@@ -32,12 +34,37 @@ namespace ByteSizeNotes.Services
             {
                 var noteToRemove = allNotes[index];
                 _storageStrategy.Delete(noteToRemove);
+                NotifyObservers(); // Voeg deze regel toe
             }
         }
 
         public void Update(Note note)
         {
-            _storageStrategy.Update(note); 
+            _storageStrategy.Update(note);
+            NotifyObservers(); // Voeg deze regel toe
         }
+
+        private readonly List<INoteObserver> _observers = new List<INoteObserver>();
+
+        public void RegisterObserver(INoteObserver observer)
+        {
+            if (!_observers.Contains(observer))
+                _observers.Add(observer);
+        }
+
+        public void UnregisterObserver(INoteObserver observer)
+        {
+            _observers.Remove(observer);
+        }
+
+        private void NotifyObservers()
+        {
+            foreach (var observer in _observers)
+            {
+                observer.OnNotesChanged();
+            }
+        }
+
+
     }
 }
