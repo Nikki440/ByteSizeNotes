@@ -68,6 +68,8 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Composite\INoteComponent.cs" />
+    <Compile Include="Composite\NoteFolder.cs" />
     <Compile Include="Factory\NoteFactory.cs" />
     <Compile Include="Forms\MainForm.cs">
       <SubType>Form</SubType>

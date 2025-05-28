@@ -11,4 +11,6 @@ public interface NoteStorageStrategy
     List<Note> LoadAll();
     void Delete(Note note);
     void Update(Note note);
+    void DeleteAll();
+
 }

@@ -41,6 +41,8 @@
             this.lblContent = new System.Windows.Forms.Label();
             this.lblNotes = new System.Windows.Forms.Label();
             this.btnNewEmptyNote = new System.Windows.Forms.Button();
+            this.treeNotes = new System.Windows.Forms.TreeView();
+            this.btnMassDelete = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
             // txtTitle
@@ -84,7 +86,7 @@
             this.lstNotes.Location = new System.Drawing.Point(338, 41);
             this.lstNotes.Margin = new System.Windows.Forms.Padding(2);
             this.lstNotes.Name = "lstNotes";
-            this.lstNotes.Size = new System.Drawing.Size(301, 212);
+            this.lstNotes.Size = new System.Drawing.Size(128, 212);
             this.lstNotes.TabIndex = 5;
             this.lstNotes.SelectedIndexChanged += new System.EventHandler(this.lstNotes_SelectedIndexChanged);
             // 
@@ -157,12 +159,32 @@
             this.btnNewEmptyNote.UseVisualStyleBackColor = true;
             this.btnNewEmptyNote.Click += new System.EventHandler(this.btnNewEmptyNote_Click_1);
             // 
+            // treeNotes
+            // 
+            this.treeNotes.Location = new System.Drawing.Point(477, 41);
+            this.treeNotes.Name = "treeNotes";
+            this.treeNotes.Size = new System.Drawing.Size(181, 212);
+            this.treeNotes.TabIndex = 11;
+            this.treeNotes.AfterSelect += new System.Windows.Forms.TreeViewEventHandler(this.treeNotes_AfterSelect);
+            // 
+            // btnMassDelete
+            // 
+            this.btnMassDelete.Location = new System.Drawing.Point(345, 258);
+            this.btnMassDelete.Name = "btnMassDelete";
+            this.btnMassDelete.Size = new System.Drawing.Size(75, 23);
+            this.btnMassDelete.TabIndex = 12;
+            this.btnMassDelete.Text = "Delete all";
+            this.btnMassDelete.UseVisualStyleBackColor = true;
+            this.btnMassDelete.Click += new System.EventHandler(this.btnMassDelete_Click);
+            // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.SystemColors.Info;
             this.ClientSize = new System.Drawing.Size(670, 284);
+            this.Controls.Add(this.btnMassDelete);
+            this.Controls.Add(this.treeNotes);
             this.Controls.Add(this.btnNewEmptyNote);
             this.Controls.Add(this.lblTitle);
             this.Controls.Add(this.lblContent);
@@ -185,5 +207,7 @@
         #endregion
 
         private Button btnNewEmptyNote;
+        private TreeView treeNotes;
+        private Button btnMassDelete;
     }
 }

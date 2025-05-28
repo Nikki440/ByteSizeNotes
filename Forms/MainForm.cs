@@ -1,4 +1,5 @@
-﻿using ByteSizeNotes.Factory;
+﻿using ByteSizeNotes.Composite;
+using ByteSizeNotes.Factory;
 using ByteSizeNotes.Models;
 using ByteSizeNotes.Observer;
 using ByteSizeNotes.Services;
@@ -14,6 +15,7 @@ namespace ByteSizeNotes
             InitializeComponent();
             NoteManager.Instance.RegisterObserver(this);
             RefreshNotes();
+            LoadNotesToTree(); // Voeg deze regel toe
         }
 
         private void btnAdd_Click(object sender, EventArgs e)
@@ -25,19 +27,20 @@ namespace ByteSizeNotes
 
         private void RefreshNotes()
         {
-            int selectedIndex = lstNotes.SelectedIndex;
+            treeNotes.Nodes.Clear();
 
-            lstNotes.Items.Clear();
+            var root = new TreeNode("Mijn Notities");
+
             foreach (var note in NoteManager.Instance.Notes)
             {
-                lstNotes.Items.Add(note.Title);
+                var noteNode = new TreeNode(note.Title) { Tag = note };
+                root.Nodes.Add(noteNode);
             }
 
-            if (selectedIndex >= 0 && selectedIndex < lstNotes.Items.Count)
-            {
-                lstNotes.SelectedIndex = selectedIndex;
-            }
+            treeNotes.Nodes.Add(root);
+            treeNotes.ExpandAll();
         }
+
 
 
         private void lstNotes_SelectedIndexChanged(object sender, EventArgs e)
@@ -57,31 +60,39 @@ namespace ByteSizeNotes
         }
         private void btnDelete_Click(object sender, EventArgs e)
         {
-            if (lstNotes.SelectedIndex != -1)
+            if (treeNotes.SelectedNode?.Tag is Note note)
             {
-                NoteManager.Instance.RemoveAt(lstNotes.SelectedIndex);
-                RefreshNotes();
-                ClearInputs();
+                int index = NoteManager.Instance.Notes.FindIndex(n => n == note);
+                if (index >= 0)
+                {
+                    NoteManager.Instance.RemoveAt(index);
+                    RefreshNotes();
+                    ClearInputs();
+                }
             }
         }
+
+
 
         private void btnUpdate_Click(object sender, EventArgs e)
         {
-            if (lstNotes.SelectedIndex != -1)
+            if (treeNotes.SelectedNode?.Tag is Note note)
             {
-                var selectedNote = NoteManager.Instance.Notes[lstNotes.SelectedIndex];
-                selectedNote.Title = txtTitle.Text;
-                selectedNote.Content = txtContent.Text;
+                note.Title = txtTitle.Text;
+                note.Content = txtContent.Text;
 
-                NoteManager.Instance.Update(selectedNote);
+                NoteManager.Instance.Update(note);
                 RefreshNotes();
             }
         }
+
+
 
         public void OnNotesChanged()
         {
             RefreshNotes();
             ClearInputs();
+            LoadNotesToTree();
             //MessageBox.Show("Observer is aangeroepen!");
         }
 
@@ -113,6 +124,48 @@ namespace ByteSizeNotes
             var emptyNote = NoteFactory.CreateEmpty();
             txtTitle.Text = emptyNote.Title;
             txtContent.Text = emptyNote.Content;
+        }
+
+        private void treeNotes_AfterSelect(object sender, TreeViewEventArgs e)
+        {
+            if (e.Node?.Tag is Note note)
+            {
+                txtTitle.Text = note.Title;
+                txtContent.Text = note.Content;
+            }
+            else
+            {
+                txtTitle.Text = string.Empty;
+                txtContent.Text = string.Empty;
+            }
+        }
+
+
+
+        private void LoadNotesToTree()
+        {
+            treeNotes.Nodes.Clear();
+
+            var root = new TreeNode("Mijn Notities");
+
+            foreach (var note in NoteManager.Instance.Notes)
+            {
+                var noteNode = new TreeNode(note.Title);
+                noteNode.Tag = note;
+                root.Nodes.Add(noteNode);
+            }
+
+            treeNotes.Nodes.Add(root);
+            treeNotes.ExpandAll();
+        }
+
+        private void btnMassDelete_Click(object sender, EventArgs e)
+        {
+            var confirm = MessageBox.Show("Weet je zeker dat je alle notities wilt verwijderen?", "Bevestigen", MessageBoxButtons.YesNo);
+            if (confirm == DialogResult.Yes)
+            {
+                NoteManager.Instance.RemoveAll();
+            }
         }
     }
 }

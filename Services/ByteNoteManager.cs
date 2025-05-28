@@ -14,17 +14,23 @@ namespace ByteSizeNotes.Services
 
         private NoteStorageStrategy _storageStrategy;
 
+        private List<Note> _cachedNotes;
+
+        public List<Note> Notes => _cachedNotes ??= _storageStrategy.LoadAll();
+
+
         private NoteManager()
         {
             _storageStrategy = new SQLSizeNotes();
         }
 
-        public List<Note> Notes => _storageStrategy.LoadAll();
-
+ 
         public void Add(Note note)
         {
             _storageStrategy.Save(note);
-            NotifyObservers(); // Voeg deze regel toe
+            RefreshCache();
+            NotifyObservers(); 
+            
         }
 
         public void RemoveAt(int index)
@@ -34,14 +40,18 @@ namespace ByteSizeNotes.Services
             {
                 var noteToRemove = allNotes[index];
                 _storageStrategy.Delete(noteToRemove);
-                NotifyObservers(); // Voeg deze regel toe
+                RefreshCache();
+                NotifyObservers(); 
+                
             }
         }
 
         public void Update(Note note)
         {
-            _storageStrategy.Update(note);
-            NotifyObservers(); // Voeg deze regel toe
+            _storageStrategy.Update(note); 
+            RefreshCache();
+            NotifyObservers();
+           
         }
 
         private readonly List<INoteObserver> _observers = new List<INoteObserver>();
@@ -64,7 +74,19 @@ namespace ByteSizeNotes.Services
                 observer.OnNotesChanged();
             }
         }
+        public void RemoveAll()
+        {
+            _storageStrategy.DeleteAll();
+            RefreshCache();
+            NotifyObservers();
+        }
+            
+        
 
+        private void RefreshCache()
+        {
+            _cachedNotes = _storageStrategy.LoadAll();
+        }
 
     }
 }

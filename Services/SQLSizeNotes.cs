@@ -70,4 +70,14 @@ public class SQLSizeNotes : NoteStorageStrategy
         cmd.Parameters.AddWithValue("@id", note.Id);
         cmd.ExecuteNonQuery();
     }
+    public void DeleteAll()
+    {
+        using (var conn = new SQLiteConnection("Data Source=notes.db"))
+        {
+            conn.Open();
+            var cmd = new SQLiteCommand("DELETE FROM Notes", conn);
+            cmd.ExecuteNonQuery();
+        }
+    }
+
 }
