@@ -9,7 +9,6 @@
         private System.Windows.Forms.TextBox txtTitle;
         private System.Windows.Forms.TextBox txtContent;
         private System.Windows.Forms.Button btnAdd;
-        private System.Windows.Forms.ListBox lstNotes;
         private System.Windows.Forms.Button btnDelete;
         private System.Windows.Forms.Button btnUpdate;
         private System.Windows.Forms.Label lblTitle;
@@ -34,7 +33,6 @@
             this.txtTitle = new System.Windows.Forms.TextBox();
             this.txtContent = new System.Windows.Forms.TextBox();
             this.btnAdd = new System.Windows.Forms.Button();
-            this.lstNotes = new System.Windows.Forms.ListBox();
             this.btnDelete = new System.Windows.Forms.Button();
             this.btnUpdate = new System.Windows.Forms.Button();
             this.lblTitle = new System.Windows.Forms.Label();
@@ -78,17 +76,6 @@
             this.btnAdd.Text = "Toevoegen";
             this.btnAdd.UseVisualStyleBackColor = false;
             this.btnAdd.Click += new System.EventHandler(this.btnAdd_Click);
-            // 
-            // lstNotes
-            // 
-            this.lstNotes.BackColor = System.Drawing.Color.Khaki;
-            this.lstNotes.FormattingEnabled = true;
-            this.lstNotes.Location = new System.Drawing.Point(338, 41);
-            this.lstNotes.Margin = new System.Windows.Forms.Padding(2);
-            this.lstNotes.Name = "lstNotes";
-            this.lstNotes.Size = new System.Drawing.Size(128, 212);
-            this.lstNotes.TabIndex = 5;
-            this.lstNotes.SelectedIndexChanged += new System.EventHandler(this.lstNotes_SelectedIndexChanged);
             // 
             // btnDelete
             // 
@@ -161,9 +148,9 @@
             // 
             // treeNotes
             // 
-            this.treeNotes.Location = new System.Drawing.Point(477, 41);
+            this.treeNotes.Location = new System.Drawing.Point(345, 41);
             this.treeNotes.Name = "treeNotes";
-            this.treeNotes.Size = new System.Drawing.Size(181, 212);
+            this.treeNotes.Size = new System.Drawing.Size(313, 212);
             this.treeNotes.TabIndex = 11;
             this.treeNotes.AfterSelect += new System.Windows.Forms.TreeViewEventHandler(this.treeNotes_AfterSelect);
             // 
@@ -192,7 +179,6 @@
             this.Controls.Add(this.txtTitle);
             this.Controls.Add(this.txtContent);
             this.Controls.Add(this.btnAdd);
-            this.Controls.Add(this.lstNotes);
             this.Controls.Add(this.btnDelete);
             this.Controls.Add(this.btnUpdate);
             this.Margin = new System.Windows.Forms.Padding(2);

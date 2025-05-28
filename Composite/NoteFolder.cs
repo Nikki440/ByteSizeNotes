@@ -25,7 +25,7 @@ namespace ByteSizeNotes.Composite
         public void Display(TreeNodeCollection nodes)
         {
             var folderNode = nodes.Add(Title);
-            folderNode.Tag = this; // Optioneel, als je folders ook wilt bewerken
+            folderNode.Tag = this; 
 
             foreach (var child in Children)
             {

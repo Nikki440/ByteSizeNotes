@@ -42,17 +42,6 @@ namespace ByteSizeNotes
         }
 
 
-
-        private void lstNotes_SelectedIndexChanged(object sender, EventArgs e)
-        {
-            if (lstNotes.SelectedIndex != -1)
-            {
-                var selectedNote = NoteManager.Instance.Notes[lstNotes.SelectedIndex];
-                txtTitle.Text = selectedNote.Title;
-                txtContent.Text = selectedNote.Content;
-            }
-        }
-
         private void ClearInputs()
         {
             txtTitle.Text = string.Empty;
