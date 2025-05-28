@@ -1,14 +1,8 @@
-﻿using ByteSizeNotes.Models;
+﻿using ByteSizeNotes.Factory;
+using ByteSizeNotes.Models;
 using ByteSizeNotes.Observer;
 using ByteSizeNotes.Services;
 using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace ByteSizeNotes
@@ -24,14 +18,10 @@ namespace ByteSizeNotes
 
         private void btnAdd_Click(object sender, EventArgs e)
         {
-            var note = new Note
-            {
-                Title = txtTitle.Text,
-                Content = txtContent.Text
-            };
-
-            NoteManager.Instance.Add(note); //singleton
+            var note = NoteFactory.Create(txtTitle.Text, txtContent.Text);
+            NoteManager.Instance.Add(note);
         }
+
 
         private void RefreshNotes()
         {
@@ -92,8 +82,10 @@ namespace ByteSizeNotes
         {
             RefreshNotes();
             ClearInputs();
-            MessageBox.Show("Observer is aangeroepen!");
+            //MessageBox.Show("Observer is aangeroepen!");
         }
+
+
 
         protected override void OnFormClosed(FormClosedEventArgs e)
         {
@@ -114,6 +106,13 @@ namespace ByteSizeNotes
         private void txtTitle_TextChanged(object sender, EventArgs e)
         {
 
-        } 
+        }
+
+        private void btnNewEmptyNote_Click_1(object sender, EventArgs e)
+        {
+            var emptyNote = NoteFactory.CreateEmpty();
+            txtTitle.Text = emptyNote.Title;
+            txtContent.Text = emptyNote.Content;
+        }
     }
 }

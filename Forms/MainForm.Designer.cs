@@ -40,6 +40,7 @@
             this.lblTitle = new System.Windows.Forms.Label();
             this.lblContent = new System.Windows.Forms.Label();
             this.lblNotes = new System.Windows.Forms.Label();
+            this.btnNewEmptyNote = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
             // txtTitle
@@ -146,12 +147,23 @@
             this.lblNotes.TabIndex = 4;
             this.lblNotes.Text = "Notes:";
             // 
+            // btnNewEmptyNote
+            // 
+            this.btnNewEmptyNote.Location = new System.Drawing.Point(262, 5);
+            this.btnNewEmptyNote.Name = "btnNewEmptyNote";
+            this.btnNewEmptyNote.Size = new System.Drawing.Size(66, 31);
+            this.btnNewEmptyNote.TabIndex = 9;
+            this.btnNewEmptyNote.Text = "Lege note";
+            this.btnNewEmptyNote.UseVisualStyleBackColor = true;
+            this.btnNewEmptyNote.Click += new System.EventHandler(this.btnNewEmptyNote_Click_1);
+            // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.SystemColors.Info;
             this.ClientSize = new System.Drawing.Size(670, 284);
+            this.Controls.Add(this.btnNewEmptyNote);
             this.Controls.Add(this.lblTitle);
             this.Controls.Add(this.lblContent);
             this.Controls.Add(this.lblNotes);
@@ -171,5 +183,7 @@
 
 
         #endregion
+
+        private Button btnNewEmptyNote;
     }
 }
