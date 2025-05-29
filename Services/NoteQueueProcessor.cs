@@ -11,10 +11,10 @@ namespace ByteSizeNotes.Services
 {
     public class NoteQueueProcessor
     {
-        private readonly BlockingCollection<Note> _noteQueue = new();
-        private readonly CancellationTokenSource _cts = new();
+        private readonly BlockingCollection<Note> _noteQueue = new(); // Thread-safe collection for queuing notes
+        private readonly CancellationTokenSource _cts = new(); // Cancellation token source to manage task cancellation
 
-        public NoteQueueProcessor()
+        public NoteQueueProcessor() // Constructor initializes the queue and starts the processing task
         {
             Task.Factory.StartNew(ProcessNotes, TaskCreationOptions.LongRunning);
         }

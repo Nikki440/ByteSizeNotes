@@ -8,7 +8,7 @@ namespace ByteSizeNotes.Bridge
 {
     public abstract class AbstractNote
     {
-        protected NoteStorageStrategy storage;
+        protected NoteStorageStrategy storage; // Strategy pattern for storage
         public string Title { get; set; }
         public string Content { get; set; }
 

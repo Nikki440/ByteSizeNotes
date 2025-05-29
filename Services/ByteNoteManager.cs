@@ -5,9 +5,7 @@ using System.Collections.Generic;
 namespace ByteSizeNotes.Services
 {
 
-    /// Singleton 
-
-    public class NoteManager
+    public class NoteManager // Singleton pattern to manage notes
     {
         private static NoteManager _instance;
         public static NoteManager Instance => _instance ?? (_instance = new NoteManager());
@@ -19,7 +17,7 @@ namespace ByteSizeNotes.Services
         public List<Note> Notes => _cachedNotes ??= _storageStrategy.LoadAll();
 
 
-        private NoteManager()
+        private NoteManager() // Private constructor to enforce singleton pattern
         {
             _storageStrategy = new SQLSizeNotes();
         }
@@ -33,7 +31,7 @@ namespace ByteSizeNotes.Services
             
         }
 
-        public void RemoveAt(int index)
+        public void RemoveAt(int index) // Remove a note by its index in the cached list
         {
             var allNotes = _storageStrategy.LoadAll();
             if (index >= 0 && index < allNotes.Count)

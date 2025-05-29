@@ -13,13 +13,13 @@ namespace ByteSizeNotes
     public partial class MainForm : Form, INoteObserver
     {
 
-        private NoteQueueProcessor _noteProcessor = new NoteQueueProcessor();
+        private NoteQueueProcessor _noteProcessor = new NoteQueueProcessor(); // Using a queue processor to handle note operations asynchronously
         public MainForm()
         {
-            InitializeComponent();
-            NoteManager.Instance.RegisterObserver(this);
-            RefreshNotes();
-            LoadNotesToTree(); 
+            InitializeComponent(); // Initialize the form components
+            NoteManager.Instance.RegisterObserver(this); // Register this form as an observer to receive updates on note changes
+            RefreshNotes(); // Refresh the notes displayed in the tree view
+            LoadNotesToTree(); // Load the notes into the tree view on form load
         }
 
         private void btnAdd_Click(object sender, EventArgs e)
@@ -84,7 +84,7 @@ namespace ByteSizeNotes
 
         private void btnUpdate_Click(object sender, EventArgs e)
         {
-            if (treeNotes.SelectedNode?.Tag is Note note)
+            if (treeNotes.SelectedNode?.Tag is Note note) // Check if a note is selected in the tree view
             {
                 note.Title = txtTitle.Text;
                 note.Content = txtContent.Text;
@@ -98,7 +98,7 @@ namespace ByteSizeNotes
 
         public void OnNotesChanged()
         {
-            if (InvokeRequired)
+            if (InvokeRequired) // Check if the call is from a different thread
             {
                 if (IsHandleCreated)
                 {
@@ -110,12 +110,12 @@ namespace ByteSizeNotes
             RefreshNotes();
             ClearInputs();
             LoadNotesToTree();
-            //MessageBox.Show("Observer is aangeroepen!");
+            //MessageBox.Show("Observer is aangeroepen!"); // Optional: Show a message box or perform any other action when notes change
         }
 
 
 
-        protected override void OnFormClosed(FormClosedEventArgs e)
+        protected override void OnFormClosed(FormClosedEventArgs e) // Override the OnFormClosed method to unregister the observer and stop the note processor
         {
             NoteManager.Instance.UnregisterObserver(this);
             base.OnFormClosed(e);
@@ -144,7 +144,7 @@ namespace ByteSizeNotes
             txtContent.Text = emptyNote.Content;
         }
 
-        private void treeNotes_AfterSelect(object sender, TreeViewEventArgs e)
+        private void treeNotes_AfterSelect(object sender, TreeViewEventArgs e) // Event handler for when a node in the tree view is selected
         {
             if (e.Node?.Tag is Note note)
             {
@@ -160,7 +160,7 @@ namespace ByteSizeNotes
 
 
 
-        private void LoadNotesToTree()
+        private void LoadNotesToTree() // Method to load notes into the tree view
         {
             treeNotes.Nodes.Clear();
 
@@ -177,7 +177,7 @@ namespace ByteSizeNotes
             treeNotes.ExpandAll();
         }
 
-        private void btnMassDelete_Click(object sender, EventArgs e)
+        private void btnMassDelete_Click(object sender, EventArgs e) // Event handler for the mass delete button
         {
             var confirm = MessageBox.Show("Weet je zeker dat je alle notities wilt verwijderen?", "Bevestigen", MessageBoxButtons.YesNo);
             if (confirm == DialogResult.Yes)

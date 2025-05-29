@@ -3,7 +3,7 @@ using System;
 
 namespace ByteSizeNotes.Factory
 {
-    public static class NoteFactory
+    public static class NoteFactory // Factory class to create Note instances
     {
         public static Note Create(string title, string content)
         {

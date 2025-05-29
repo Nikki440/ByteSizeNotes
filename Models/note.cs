@@ -8,7 +8,7 @@ using System.Windows.Forms;
 
 namespace ByteSizeNotes.Models
 {
-    public class Note : INoteComponent
+    public class Note : INoteComponent // Implements the INoteComponent interface for displaying notes in a tree view
     {
         public int Id { get; set; }
         public string Title { get; set; }

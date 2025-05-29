@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace ByteSizeNotes.Observer
 {
-    public interface INoteObserver
+    public interface INoteObserver // Observer Pattern to notify changes in notes
     {
         void OnNotesChanged();
     }
