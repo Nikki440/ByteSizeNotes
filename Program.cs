@@ -16,6 +16,7 @@ namespace ByteSizeNotes
         {
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
+            Bridge.BridgeDemo.Run();
             Application.Run(new MainForm());
         }
     }

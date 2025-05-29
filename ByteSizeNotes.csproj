@@ -68,6 +68,9 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Bridge\AbstractNote.cs" />
+    <Compile Include="Bridge\BidgeDemo.cs" />
+    <Compile Include="Bridge\TextNote.cs" />
     <Compile Include="Composite\INoteComponent.cs" />
     <Compile Include="Composite\NoteFolder.cs" />
     <Compile Include="Factory\NoteFactory.cs" />

@@ -12,5 +12,7 @@ public interface NoteStorageStrategy
     void Delete(Note note);
     void Update(Note note);
     void DeleteAll();
+    void Save(string title, string content);
+    void Delete(string title);
 
 }

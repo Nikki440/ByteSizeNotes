@@ -79,5 +79,15 @@ public class SQLSizeNotes : NoteStorageStrategy
             cmd.ExecuteNonQuery();
         }
     }
+    public void Save(string title, string content)
+    {
+        // Simuleer SQL-opslag
+        Console.WriteLine($"[SQL] Sla '{title}' op in database");
+    }
+
+    public void Delete(string title)
+    {
+        Console.WriteLine($"[SQL] Verwijder '{title}' uit database");
+    }
 
 }
