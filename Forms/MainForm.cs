@@ -4,6 +4,7 @@ using ByteSizeNotes.Models;
 using ByteSizeNotes.Observer;
 using ByteSizeNotes.Services;
 using System;
+using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace ByteSizeNotes
@@ -27,19 +28,33 @@ namespace ByteSizeNotes
 
         private void RefreshNotes()
         {
-            treeNotes.Nodes.Clear();
-
-            var root = new TreeNode("Mijn Notities");
-
-            foreach (var note in NoteManager.Instance.Notes)
+            Task.Run(() => // Haal de notities op in een aparte thread->tread pool pattern
             {
-                var noteNode = new TreeNode(note.Title) { Tag = note };
-                root.Nodes.Add(noteNode);
-            }
+                var notes = NoteManager.Instance.Notes;
 
-            treeNotes.Nodes.Add(root);
-            treeNotes.ExpandAll();
+                // Check of de handle al bestaat voordat je Invoke gebruikt
+                if (IsHandleCreated)
+                {
+                    Invoke((MethodInvoker)delegate
+                    {
+                        treeNotes.Nodes.Clear();
+
+                        var root = new TreeNode("Mijn Notities");
+
+                        foreach (var note in notes)
+                        {
+                            var noteNode = new TreeNode(note.Title) { Tag = note };
+                            root.Nodes.Add(noteNode);
+                        }
+
+                        treeNotes.Nodes.Add(root);
+                        treeNotes.ExpandAll();
+                    });
+                }
+            });
         }
+
+
 
 
         private void ClearInputs()
@@ -79,6 +94,15 @@ namespace ByteSizeNotes
 
         public void OnNotesChanged()
         {
+            if (InvokeRequired)
+            {
+                if (IsHandleCreated)
+                {
+                    Invoke((MethodInvoker)delegate { OnNotesChanged(); });
+                }
+                return;
+            }
+
             RefreshNotes();
             ClearInputs();
             LoadNotesToTree();
