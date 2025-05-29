@@ -85,6 +85,7 @@
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Services\ByteNoteManager.cs" />
+    <Compile Include="Services\NoteQueueProcessor.cs" />
     <Compile Include="Services\NoteStorageStrategy.cs" />
     <Compile Include="Services\SQLSizeNotes.cs" />
     <EmbeddedResource Include="Forms\MainForm.resx">

@@ -81,7 +81,6 @@ public class SQLSizeNotes : NoteStorageStrategy
     }
     public void Save(string title, string content)
     {
-        // Simuleer SQL-opslag
         Console.WriteLine($"[SQL] Sla '{title}' op in database");
     }
 

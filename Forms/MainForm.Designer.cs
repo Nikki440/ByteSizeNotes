@@ -138,16 +138,18 @@
             // 
             // btnNewEmptyNote
             // 
-            this.btnNewEmptyNote.Location = new System.Drawing.Point(262, 5);
+            this.btnNewEmptyNote.BackColor = System.Drawing.Color.DarkKhaki;
+            this.btnNewEmptyNote.Location = new System.Drawing.Point(227, 16);
             this.btnNewEmptyNote.Name = "btnNewEmptyNote";
-            this.btnNewEmptyNote.Size = new System.Drawing.Size(66, 31);
+            this.btnNewEmptyNote.Size = new System.Drawing.Size(101, 23);
             this.btnNewEmptyNote.TabIndex = 9;
-            this.btnNewEmptyNote.Text = "Lege note";
-            this.btnNewEmptyNote.UseVisualStyleBackColor = true;
+            this.btnNewEmptyNote.Text = "Nieuwe notitie";
+            this.btnNewEmptyNote.UseVisualStyleBackColor = false;
             this.btnNewEmptyNote.Click += new System.EventHandler(this.btnNewEmptyNote_Click_1);
             // 
             // treeNotes
             // 
+            this.treeNotes.BackColor = System.Drawing.Color.Khaki;
             this.treeNotes.Location = new System.Drawing.Point(345, 41);
             this.treeNotes.Name = "treeNotes";
             this.treeNotes.Size = new System.Drawing.Size(313, 212);
@@ -156,12 +158,13 @@
             // 
             // btnMassDelete
             // 
-            this.btnMassDelete.Location = new System.Drawing.Point(345, 258);
+            this.btnMassDelete.BackColor = System.Drawing.Color.DarkKhaki;
+            this.btnMassDelete.Location = new System.Drawing.Point(568, 259);
             this.btnMassDelete.Name = "btnMassDelete";
-            this.btnMassDelete.Size = new System.Drawing.Size(75, 23);
+            this.btnMassDelete.Size = new System.Drawing.Size(90, 23);
             this.btnMassDelete.TabIndex = 12;
-            this.btnMassDelete.Text = "Delete all";
-            this.btnMassDelete.UseVisualStyleBackColor = true;
+            this.btnMassDelete.Text = "Verwijder alles";
+            this.btnMassDelete.UseVisualStyleBackColor = false;
             this.btnMassDelete.Click += new System.EventHandler(this.btnMassDelete_Click);
             // 
             // MainForm
@@ -184,6 +187,7 @@
             this.Margin = new System.Windows.Forms.Padding(2);
             this.Name = "MainForm";
             this.Text = "ByteSizeNotes";
+            this.Load += new System.EventHandler(this.MainForm_Load);
             this.ResumeLayout(false);
             this.PerformLayout();
 

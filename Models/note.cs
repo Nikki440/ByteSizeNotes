@@ -18,7 +18,7 @@ namespace ByteSizeNotes.Models
         public void Display(TreeNodeCollection nodes)
         {
             var node = nodes.Add(Title);
-            node.Tag = this; // Bewaar referentie naar deze Note
+            node.Tag = this; // Store the note itself in the tag for easy retrieval later
         }
 
     }

@@ -11,7 +11,7 @@ namespace ByteSizeNotes.Factory
             {
                 Title = title,
                 Content = content,
-                Created = DateTime.Now // Voeg eventueel extra standaardwaarden toe
+                Created = DateTime.Now 
             };
         }
         public static Note CreateEmpty()

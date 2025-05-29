@@ -9,30 +9,34 @@ using System.Windows.Forms;
 
 namespace ByteSizeNotes
 {
+
     public partial class MainForm : Form, INoteObserver
     {
+
+        private NoteQueueProcessor _noteProcessor = new NoteQueueProcessor();
         public MainForm()
         {
             InitializeComponent();
             NoteManager.Instance.RegisterObserver(this);
             RefreshNotes();
-            LoadNotesToTree(); // Voeg deze regel toe
+            LoadNotesToTree(); 
         }
 
         private void btnAdd_Click(object sender, EventArgs e)
         {
             var note = NoteFactory.Create(txtTitle.Text, txtContent.Text);
-            NoteManager.Instance.Add(note);
+            _noteProcessor.Enqueue(note);
+
         }
 
 
         private void RefreshNotes()
         {
-            Task.Run(() => // Haal de notities op in een aparte thread->tread pool pattern
+            Task.Run(() => // ->tread pool pattern
             {
                 var notes = NoteManager.Instance.Notes;
 
-                // Check of de handle al bestaat voordat je Invoke gebruikt
+                // check if the handle is created before invoking
                 if (IsHandleCreated)
                 {
                     Invoke((MethodInvoker)delegate
@@ -115,6 +119,7 @@ namespace ByteSizeNotes
         {
             NoteManager.Instance.UnregisterObserver(this);
             base.OnFormClosed(e);
+            _noteProcessor.Stop();
         }
 
         private void txtContent_TextChanged(object sender, EventArgs e)
@@ -179,6 +184,11 @@ namespace ByteSizeNotes
             {
                 NoteManager.Instance.RemoveAll();
             }
+        }
+
+        private void MainForm_Load(object sender, EventArgs e)
+        {
+
         }
     }
 }
