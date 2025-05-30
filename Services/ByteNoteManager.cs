@@ -1,5 +1,6 @@
 ﻿using ByteSizeNotes.Models;
 using ByteSizeNotes.Observer;
+using System;
 using System.Collections.Generic;
 
 namespace ByteSizeNotes.Services
@@ -22,13 +23,13 @@ namespace ByteSizeNotes.Services
             _storageStrategy = new SQLSizeNotes();
         }
 
- 
+
         public void Add(Note note)
         {
             _storageStrategy.Save(note);
             RefreshCache();
-            NotifyObservers(); 
-            
+            NotifyObservers();
+
         }
 
         public void RemoveAt(int index) // Remove a note by its index in the cached list
@@ -39,17 +40,17 @@ namespace ByteSizeNotes.Services
                 var noteToRemove = allNotes[index];
                 _storageStrategy.Delete(noteToRemove);
                 RefreshCache();
-                NotifyObservers(); 
-                
+                NotifyObservers();
+
             }
         }
 
         public void Update(Note note)
         {
-            _storageStrategy.Update(note); 
+            _storageStrategy.Update(note);
             RefreshCache();
             NotifyObservers();
-           
+
         }
 
         private readonly List<INoteObserver> _observers = new List<INoteObserver>();
@@ -78,13 +79,31 @@ namespace ByteSizeNotes.Services
             RefreshCache();
             NotifyObservers();
         }
-            
-        
+
+
 
         private void RefreshCache()
         {
             _cachedNotes = _storageStrategy.LoadAll();
         }
+        public Note CloneNote(Note originalNote)
+        {
+            if (originalNote == null)
+            {
+                throw new ArgumentNullException(nameof(originalNote));
+            }
 
+            try
+            {
+                var clonedNote = originalNote.CreateClone();
+                this.Add(clonedNote);
+                return clonedNote;
+            }
+            catch (Exception ex)
+            {
+                // Log error if needed
+                throw new InvalidOperationException("Failed to clone note", ex);
+            }
+        }
     }
 }

@@ -190,5 +190,25 @@ namespace ByteSizeNotes
         {
 
         }
+
+        private TreeNode FindNodeByNote(Note note)
+        {
+            foreach (TreeNode node in treeNotes.Nodes)
+            {
+                if (node.Tag is Note nodeNote && nodeNote.Id == note.Id)
+                    return node;
+            }
+            return null;
+        }
+
+        private void btnCloneNote_Click_1(object sender, EventArgs e)
+        {
+            if (treeNotes.SelectedNode?.Tag is Note selectedNote)
+            {
+                var clonedNote = NoteManager.Instance.CloneNote(selectedNote);
+                RefreshNotes();
+                treeNotes.SelectedNode = FindNodeByNote(clonedNote);
+            }
+        }
     }
 }

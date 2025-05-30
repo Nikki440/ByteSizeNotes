@@ -41,6 +41,7 @@
             this.btnNewEmptyNote = new System.Windows.Forms.Button();
             this.treeNotes = new System.Windows.Forms.TreeView();
             this.btnMassDelete = new System.Windows.Forms.Button();
+            this.btnCloneNote = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
             // txtTitle
@@ -167,12 +168,23 @@
             this.btnMassDelete.UseVisualStyleBackColor = false;
             this.btnMassDelete.Click += new System.EventHandler(this.btnMassDelete_Click);
             // 
+            // btnCloneNote
+            // 
+            this.btnCloneNote.Location = new System.Drawing.Point(464, 25);
+            this.btnCloneNote.Name = "btnCloneNote";
+            this.btnCloneNote.Size = new System.Drawing.Size(119, 35);
+            this.btnCloneNote.TabIndex = 13;
+            this.btnCloneNote.Text = "clone";
+            this.btnCloneNote.UseVisualStyleBackColor = true;
+            this.btnCloneNote.Click += new System.EventHandler(this.btnCloneNote_Click_1);
+            // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.SystemColors.Info;
             this.ClientSize = new System.Drawing.Size(670, 284);
+            this.Controls.Add(this.btnCloneNote);
             this.Controls.Add(this.btnMassDelete);
             this.Controls.Add(this.treeNotes);
             this.Controls.Add(this.btnNewEmptyNote);
@@ -199,5 +211,6 @@
         private Button btnNewEmptyNote;
         private TreeView treeNotes;
         private Button btnMassDelete;
+        private Button btnCloneNote;
     }
 }
