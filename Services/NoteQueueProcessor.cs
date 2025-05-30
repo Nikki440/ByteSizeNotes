@@ -30,8 +30,17 @@ namespace ByteSizeNotes.Services
             {
                 foreach (var note in _noteQueue.GetConsumingEnumerable(_cts.Token))
                 {
-                    NoteManager.Instance.Add(note);
-                    Thread.Sleep(500); // simulate processing delay
+                    try
+                    {
+                        NoteManager.Instance.Add(note);
+                    }
+                    catch (Exception ex)
+                    {
+                        // Handle validation errors from the chain
+                        // Could log this or notify the UI in a real application
+                        Console.WriteLine($"Error processing note: {ex.Message}");
+                    }
+                    Thread.Sleep(500);
                 }
             }
             catch (OperationCanceledException)

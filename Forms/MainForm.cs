@@ -24,9 +24,16 @@ namespace ByteSizeNotes
 
         private void btnAdd_Click(object sender, EventArgs e)
         {
-            var note = NoteFactory.Create(txtTitle.Text, txtContent.Text);
-            _noteProcessor.Enqueue(note);
-
+            try
+            {
+                var note = NoteFactory.Create(txtTitle.Text, txtContent.Text);
+                _noteProcessor.Enqueue(note);
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Error creating note: {ex.Message}", "Error",
+                    MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
         }
 
 

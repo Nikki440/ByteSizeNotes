@@ -1,4 +1,5 @@
-﻿using ByteSizeNotes.Models;
+﻿using ByteSizeNotes.ChainOfResponsibility;
+using ByteSizeNotes.Models;
 using ByteSizeNotes.Observer;
 using System;
 using System.Collections.Generic;
@@ -16,20 +17,22 @@ namespace ByteSizeNotes.Services
         private List<Note> _cachedNotes;
 
         public List<Note> Notes => _cachedNotes ??= _storageStrategy.LoadAll();
-
+        private INoteHandler _noteHandlerChain;
 
         private NoteManager() // Private constructor to enforce singleton pattern
         {
             _storageStrategy = new SQLSizeNotes();
+            InitializeHandlerChain();
         }
 
 
         public void Add(Note note)
         {
-            _storageStrategy.Save(note);
+
+            var processedNote = _noteHandlerChain.Handle(note);// Process the note through the chain before saving
+            _storageStrategy.Save(processedNote);
             RefreshCache();
             NotifyObservers();
-
         }
 
         public void RemoveAt(int index) // Remove a note by its index in the cached list
@@ -47,10 +50,10 @@ namespace ByteSizeNotes.Services
 
         public void Update(Note note)
         {
-            _storageStrategy.Update(note);
+            var processedNote = _noteHandlerChain.Handle(note);
+            _storageStrategy.Update(processedNote);
             RefreshCache();
             NotifyObservers();
-
         }
 
         private readonly List<INoteObserver> _observers = new List<INoteObserver>();
@@ -105,5 +108,19 @@ namespace ByteSizeNotes.Services
                 throw new InvalidOperationException("Failed to clone note", ex);
             }
         }
+        private void InitializeHandlerChain()
+        {
+            // Build the chain of responsibility
+            var titleValidator = new TitleValidationHandler();
+            var profanityFilter = new ProfanityFilterHandler();
+            var contentFormatter = new ContentFormattingHandler();
+
+            titleValidator
+                .SetNext(profanityFilter)
+                .SetNext(contentFormatter);
+
+            _noteHandlerChain = titleValidator;
+        }
+
     }
 }

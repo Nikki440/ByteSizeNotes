@@ -170,12 +170,13 @@
             // 
             // btnCloneNote
             // 
-            this.btnCloneNote.Location = new System.Drawing.Point(464, 25);
+            this.btnCloneNote.BackColor = System.Drawing.Color.DarkKhaki;
+            this.btnCloneNote.Location = new System.Drawing.Point(554, 15);
             this.btnCloneNote.Name = "btnCloneNote";
-            this.btnCloneNote.Size = new System.Drawing.Size(119, 35);
+            this.btnCloneNote.Size = new System.Drawing.Size(104, 24);
             this.btnCloneNote.TabIndex = 13;
-            this.btnCloneNote.Text = "clone";
-            this.btnCloneNote.UseVisualStyleBackColor = true;
+            this.btnCloneNote.Text = "Maak kopie";
+            this.btnCloneNote.UseVisualStyleBackColor = false;
             this.btnCloneNote.Click += new System.EventHandler(this.btnCloneNote_Click_1);
             // 
             // MainForm
